@@ -19,6 +19,37 @@ For events, please visit [vllm.ai/events](https://vllm.ai/events) to join us.
 
 ---
 
+## Zenteiq Research fork: Dhir models
+
+This is the [Zenteiq Research](https://github.com/zenteiq-research) fork of vLLM. It adds native support for the
+Dhir language models, developed under the IndiaAI Foundation Models initiative
+([IndiaAI](https://indiaai.gov.in), [MeitY](https://www.meity.gov.in)). Use it until Dhir support is merged upstream
+([vllm-project/vllm#66166](https://github.com/vllm-project/vllm/pull/66166)).
+
+| Model | Architecture | Hugging Face | AIKosh |
+| --- | --- | --- | --- |
+| Dhir 2B | `DhirForCausalLM` | [`zenteiq-ai/Dhir2b`](https://huggingface.co/zenteiq-ai/Dhir2b) | [Dhir 2B](https://aikosh.indiaai.gov.in/home/models/details/dhir_2b.html) |
+| Dhir 5B MoE | `DhirMoeForCausalLM` | [`zenteiq-ai/Dhir5b-MoE-A1.7B`](https://huggingface.co/zenteiq-ai/Dhir5b-MoE-A1.7B) | [Dhir 5B](https://aikosh.indiaai.gov.in/home/models/details/dhir_5b_1.html) |
+
+Install (NVIDIA GPU, uses vLLM's prebuilt kernels, no compilation):
+
+```bash
+git clone https://github.com/zenteiq-research/vllm.git
+cd vllm
+VLLM_USE_PRECOMPILED=1 pip install -e .
+```
+
+The Hugging Face repositories are gated: accept the terms on the model page, then run `huggingface-cli login`.
+
+```bash
+vllm serve zenteiq-ai/Dhir2b
+vllm serve zenteiq-ai/Dhir5b-MoE-A1.7B
+```
+
+No `--trust-remote-code` is needed. Dhir 5B supports `--tensor-parallel-size` 1 or 5 (it has 5 KV heads).
+
+---
+
 ## About
 
 vLLM is a fast and easy-to-use library for LLM inference and serving.
